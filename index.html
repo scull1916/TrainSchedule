@@ -5,10 +5,14 @@
 	<title>Train Schedule App</title>
 	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	
+	<!-- Link to Firebase -->
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 </head>
 
 <body>
 
+	<!-- <img src="..." class="img-fluid" alt="Responsive image"> -->
 	<!-- Layout the UI -->
 
 	<div class="container">
@@ -29,8 +33,42 @@
 					<div class="card-header">
 						Train Schedule
 					</div>
-					  <div class="card-body">
-					    This is some text within a card body.
+					  <div class="card-body" id="arrivalsBoard">
+
+					    <!-- <table class="table table-striped">
+						  <thead>
+						    <tr>
+						      <th scope="col">Train Name</th>
+						      <th scope="col">Destination</th>
+						      <th scope="col">Frequency (min.)</th>
+						      <th scope="col">Next Arrival</th>
+						      <th scope="col">Minutes Away</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">1</th>
+						      <td>Mark</td>
+						      <td>Otto</td>
+						      <td>@mdo</td>
+						      <td>text</td>
+						    </tr>
+						    <tr>
+						      <th scope="row">2</th>
+						      <td>Jacob</td>
+						      <td>Thornton</td>
+						      <td>@fat</td>
+						      <td>text</td>
+						    </tr>
+						    <tr>
+						      <th scope="row">3</th>
+						      <td>Larry</td>
+						      <td>the Bird</td>
+						      <td>@twitter</td>
+						      <td>text</td>
+						    </tr>
+						  </tbody>
+						</table> -->
 					  </div>
 				</div>
 			</div>
@@ -48,8 +86,31 @@
 						Add Train
 					</div>
 					  <div class="card-body">
-					    This is some text within a card body.
+					    <form>
+
+						  <div class="form-group">
+						    <label for="formGroupTrainName">Train Name</label>
+						    <input type="text" class="form-control" id="TrainName" placeholder="Train Name">
+						  </div>
+
+						  <div class="form-group">
+						    <label for="formGroupDestination">Destination</label>
+						    <input type="text" class="form-control" id="Destination" placeholder="Destination">
+						  </div>
+
+						  <div class="form-group">
+						    <label for="formGroupFirstTrain">First Train time (24:00 hrs.)</label>
+						    <input type="text" class="form-control" id="FirstTrain" placeholder="First Train">
+						  </div>
+
+						  <div class="form-group">
+						    <label for="formGroupFrequency">Frequency</label>
+						    <input type="text" class="form-control" id="Frequency" placeholder="Frequency">
+						  </div>
+
+						</form>
 					  </div>
+					  <button class="btn btn-primary col-md-2" id="addTrain" type="submit">Submit</button>
 				</div>
 			</div>
 		</div>
