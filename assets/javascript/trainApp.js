@@ -24,6 +24,8 @@ $(document).ready(function()
   var destination = "";
   var firstTrain = 0;
   var frequency = 0;
+  var newTrain = "";
+  
 
 
 
@@ -40,14 +42,20 @@ $("#addTrain").on("click", function(event)
 	firstTrain = $("#FirstTrain").val().trim();
 	frequency = $("#Frequency").val().trim();
 
+	console.log(trainName);
+	console.log(destination);
+	console.log(firstTrain);
+	console.log(frequency);
+	
+
 	//Create a local object to hold employee data
-	var newTrain = 
+	newTrain = 
 	{
 		name: trainName,
 		destination: destination,
 		firstTrain: firstTrain,
-		frequency: frequency,
-		dateAdded: firebase.database.ServerValue.TIMESTAMP
+		frequency: frequency
+		
 	};
 
 	console.log(newTrain);
@@ -58,16 +66,28 @@ $("#addTrain").on("click", function(event)
 	
 })
 
-//Firebase watcher and initial loader
-database.ref().on("value", function(snapshot)
-{
-	//Log the data in the snapshot
-	console.log(snapshot.val().trainName);
-	console.log(snapshot.val().destination);
-	console.log(snapshot.val().firstTrain);
-	console.log(snapshot.val().frequency);
-	console.log(snapshot.val().joinDate);
-})
+	//Log content to the console
+	console.log(newTrain.name);
+	console.log(newTrain.destination);
+	console.log(newTrain.firstTrain);
+	console.log(newTrain.frequency);
+
+	//Clear the entry form text boxes
+	$("#TrainName").val("");
+	$("#Destination").val("");
+	$("#FirstTrain").val("");
+	$("#Frequency").val("");
+
+	//Create a Firebase event to add train to the database and a new row to the HTML to display:
+	//this essentially pulls the data living in the Firebase project into the app so that it can
+	//be added to the UI
+	database.ref().on("child_added", function(childsnapshot, prevChildKey)
+	{
+		console.log(childsnapshot.val());
+
+		//Store data into variables
+
+	});
 
 
 
