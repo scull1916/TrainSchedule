@@ -39,7 +39,8 @@ $("#addTrain").on("click", function(event)
 	//Grab input values entered into the form
 	trainName = $("#TrainName").val().trim();
 	destination = $("#Destination").val().trim();
-	firstTrain = $("#FirstTrain").val().trim();
+	//Formats user input with moment.js
+	firstTrain = moment($("#FirstTrain").val().trim(), "HH:MM").format("X");
 	frequency = $("#Frequency").val().trim();
 
 	console.log(trainName);
@@ -86,6 +87,10 @@ $("#addTrain").on("click", function(event)
 		console.log(childsnapshot.val());
 
 		//Store data into variables
+		var addedTrain = childsnapshot.val().name;
+		var destined = childsnapshot.val().destination;
+		var trainOne = childsnapshot.val().firstTrain;
+		var freQ = childsnapshot.val().frequency;
 
 	});
 
