@@ -19,19 +19,6 @@ $(document).ready(function()
   //Variable to reference the database
   var database = firebase.database();
 
-  //Initial values
-  var trainName = "";
-  var destination = "";
-  var firstTrain = 0;
-  var frequency = 0;
-  var first2Now = "";
-  var trainCount = 0;
-  var minLeft = 0;
-  var nextTrain = "";
-  
-
-
-
 
 //Build functions
 
@@ -40,12 +27,12 @@ $("#addTrain").on("click", function(event)
 	event.preventDefault();
 
 	//Grab input values entered into the form
-	trainName = $("#TrainName").val().trim();
-	destination = $("#Destination").val().trim();
+	var trainName = $("#TrainName").val().trim();
+	var destination = $("#Destination").val().trim();
 
 	//Formats user input with moment.js
-	firstTrain = moment($("#FirstTrain").val().trim(), "HH:MM").format("X");
-	frequency = $("#Frequency").val().trim();
+	var firstTrain = moment($("#FirstTrain").val().trim(), "HH:MM").format("X");
+	var frequency = $("#Frequency").val().trim();
 	
 	//Create a local object to hold train data
 	newTrain = 
@@ -54,8 +41,7 @@ $("#addTrain").on("click", function(event)
 		destination: destination,
 		firstTrain: firstTrain,
 		frequency: frequency,
-		nextTrain: nextTrain,
-		minTill: minLeft
+
 		
 	};
 
@@ -71,8 +57,7 @@ $("#addTrain").on("click", function(event)
 	console.log(newTrain.destination);
 	console.log(newTrain.firstTrain);
 	console.log(newTrain.frequency);
-	console.log(newTrain.nextTrain);
-	console.log(newTrain.minTill);
+
 
 	//Clear the entry form text boxes
 	$("#TrainName").val("");
@@ -101,34 +86,33 @@ $("#addTrain").on("click", function(event)
 		console.log(freQ);
 
 
-		//Determine the arrival of the next train
-		// var interval = moment().diff(moment.unix(trainOne, "X"), "hours");
-		// console.log("next train: " + interval);
+		//Push the time of the first train back one year to ensure it is a time prior to current time
+		var firstTrainConverted = moment(trainOne, "hh:mm").subtract(1, "years");
+
+		//Assign current time to a variable
+		var currentTime = moment();
+
+		//Calculate the difference in timees
+		var diffTime = moment().diff(moment(firstTrainConverted), "minutes"); 
+
 		
-		//Calculate the duration in minutes between the current time and the first train
-		first2Now = moment().diff(moment.unix(firstTrain, "X"), "hh:mm");
+		//Calculate the time apart
+		var tRemainder = diffTime % freQ;
+
+		//Minutes until the next train
+		var minutesRemain = freQ - tRemainder;
+
+		//Next train
+		var nextTrain = moment().add(minutesRemain, "minutes");
 
 
-
-		//Determine how many minutes remain until the next train arrives
-
-		//Determine the number of trains that have run since the first train
-		trainCount = first2Now % Frequency;
-
-		//Determine the minutes until the next train arrives
-		minLeft = frequency - trainCount;
-
-		//Determine the time of the next train arrival
-		nextTrain = moment().add(moment.unix(minLeft, "X"), "hh:mm");
-
-		//Format the data into a readable format
 
 
 
 		//Add train schedule information into HTML
 		$("#trainSchedule > tbody").append("<tr><td>" + addedTrain 
-			+ "</td><td>" + destined + "</td><td>" + freQ + "</td><td>" + nextTrain 
-			+ "</td><td>" + minLeft + "</td></tr>");
+			+ "</td><td>" + destined + "</td><td>" + freQ + "</td><td>" + nextTrain.format("hh:mm") 
+			+ "</td><td>" + minutesRemain + "</td></tr>");
 		
 
 	});
