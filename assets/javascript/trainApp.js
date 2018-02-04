@@ -31,7 +31,7 @@ $("#addTrain").on("click", function(event)
 	var destination = $("#Destination").val().trim();
 
 	//Formats user input with moment.js
-	var firstTrain = moment($("#FirstTrain").val().trim(), "HH:MM").format("X");
+	var firstTrain = moment($("#FirstTrain").val().trim(), "hh:mm").format();
 	var frequency = $("#Frequency").val().trim();
 	
 	//Create a local object to hold train data
@@ -40,7 +40,7 @@ $("#addTrain").on("click", function(event)
 		name: trainName,
 		destination: destination,
 		firstTrain: firstTrain,
-		frequency: frequency,
+		frequency: frequency
 
 		
 	};
@@ -64,6 +64,8 @@ $("#addTrain").on("click", function(event)
 	$("#Destination").val("");
 	$("#FirstTrain").val("");
 	$("#Frequency").val("");
+
+	return false;
 })
 
 	//Create a Firebase event to add train to the database and a new row to the HTML to display:
@@ -101,9 +103,11 @@ $("#addTrain").on("click", function(event)
 
 		//Minutes until the next train
 		var minutesRemain = freQ - tRemainder;
+		console.log(minutesRemain);
 
 		//Next train
 		var nextTrain = moment().add(minutesRemain, "minutes");
+
 
 
 
